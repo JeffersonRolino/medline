@@ -6,6 +6,8 @@ import br.com.medline.domain.medico.Medico;
 import br.com.medline.domain.medico.MedicoRepository;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,8 +23,8 @@ public class MedicoController {
     }
 
     @GetMapping
-    public List<DadosListagemMedicoDTO> listar(){
-        return medicoRepository.findAll().stream().map(DadosListagemMedicoDTO::new).toList();
+    public Page<DadosListagemMedicoDTO> listar(Pageable paginacao){
+        return medicoRepository.findAll(paginacao).map(DadosListagemMedicoDTO::new);
     }
 
     @PostMapping
