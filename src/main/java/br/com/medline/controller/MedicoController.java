@@ -8,6 +8,7 @@ import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,7 +24,7 @@ public class MedicoController {
     }
 
     @GetMapping
-    public Page<DadosListagemMedicoDTO> listar(Pageable paginacao){
+    public Page<DadosListagemMedicoDTO> listar(@PageableDefault(size = 10, sort = {"nome"}) Pageable paginacao){
         return medicoRepository.findAll(paginacao).map(DadosListagemMedicoDTO::new);
     }
 
