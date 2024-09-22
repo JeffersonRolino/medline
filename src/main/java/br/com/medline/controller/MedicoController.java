@@ -1,14 +1,14 @@
 package br.com.medline.controller;
 
 import br.com.medline.domain.medico.DadosCadastroMedicoDTO;
+import br.com.medline.domain.medico.DadosListagemMedicoDTO;
 import br.com.medline.domain.medico.Medico;
 import br.com.medline.domain.medico.MedicoRepository;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/medicos")
@@ -18,6 +18,11 @@ public class MedicoController {
 
     public MedicoController(MedicoRepository medicoRepository) {
         this.medicoRepository = medicoRepository;
+    }
+
+    @GetMapping
+    public List<DadosListagemMedicoDTO> listar(){
+        return medicoRepository.findAll().stream().map(DadosListagemMedicoDTO::new).toList();
     }
 
     @PostMapping
